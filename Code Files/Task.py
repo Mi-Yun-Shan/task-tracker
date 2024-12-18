@@ -57,6 +57,8 @@ class Task:
             for task in tasks:
                 print(f"{task['id']}: {task['description']}")
 
+        print("\n")
+
     def print_todo(self):
         print("Tasks yet to be started: \n")
         with open(self.file_name, "r") as tasks_file:
@@ -64,6 +66,13 @@ class Task:
             for task in tasks:
                 if task['status'] == 'todo':
                     print(f"{task['id']}: {task['description']}")
+        print("\n")
 
-
+    def print_in_progress(self):
+        print("Tasks in progress: \n")
+        with open(self.file_name, "r") as tasks_file:
+            tasks = json.load(tasks_file)
+            for task in tasks:
+                if task['status'] == 'in progress':
+                    print(f"{task['id']}: {task['description']}")
 
