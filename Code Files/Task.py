@@ -12,7 +12,7 @@ class Task:
             with open(self.file_name, "w") as tasks_file:
                 json.dump([], tasks_file)  # Initialize with an empty list
 
-    # Add and delete methods
+    # CRUD methods
 
     def add_task(self, task_id, description, status="todo", created_at=None, updated_at=None):
         # Set default values for created_at and updated_at
@@ -44,10 +44,50 @@ class Task:
         with open(self.file_name, "w") as tasks_file:
             json.dump(tasks, tasks_file, indent=4)  # Write as a pretty-printed JSON array
 
-    def clear_tasks(self):
+    def clear_tasks(self): # Overwrite the current file and start anew
         with open(self.file_name, "w") as tasks_file:
             tasks = []
-            json.dump(tasks, tasks_file)
+            json.dump(tasks, tasks_file) # Write empty list to file
+
+    def update_task(self):
+
+        # Menu
+
+        print("Incomplete Tasks: \n")
+        Task.print_todo(self)
+        Task.print_in_progress(self)
+
+        # User input
+        task_to_update = input("Which file would you like to update? >> ")
+        new_status = input("What status would you like to update the task to? >> ")
+
+        # Locate and update file
+        with open(self.file_name, "r") as tasks_file:
+            tasks = json.load(tasks_file)
+
+            # Error handling
+            try:
+                tasks[int(task_to_update + 1)]["status"] = new_status # +1 to be user-friendly
+            except KeyError:
+                print("No such task")
+
+            tasks[int(task_to_update + 1)]["updated_at"] = datetime.datetime.now().isoformat() # Update time to reflect update of record
+
+            # Update description
+            description_update_choice = input("Would you like to alter the description too? (Y/N) >>  ")
+            if description_update_choice.lower() == "y":
+                new_description = input("New description >> ")
+                tasks[int(task_to_update + 1)]["description"] = new_description
+
+            elif description_update_choice.lower() == "n":
+                print("Description unchanged")
+            else:
+                print("Invalid input")
+
+
+        # Write back to file
+        with open(self.file_name, "w") as tasks_file:
+            json.dump(tasks, tasks_file, indent=4)
 
     # Printing methods
 
