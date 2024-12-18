@@ -67,17 +67,17 @@ class Task:
 
             # Error handling
             try:
-                tasks[int(task_to_update + 1)]["status"] = new_status # +1 to be user-friendly
+                tasks[int(task_to_update) - 1]["status"] = new_status # +1 to be user-friendly
             except KeyError:
                 print("No such task")
 
-            tasks[int(task_to_update + 1)]["updated_at"] = datetime.datetime.now().isoformat() # Update time to reflect update of record
+            tasks[int(task_to_update) - 1]["updated_at"] = datetime.datetime.now().isoformat() # Update time to reflect update of record
 
             # Update description
             description_update_choice = input("Would you like to alter the description too? (Y/N) >>  ")
             if description_update_choice.lower() == "y":
                 new_description = input("New description >> ")
-                tasks[int(task_to_update + 1)]["description"] = new_description
+                tasks[int(task_to_update) - 1]["description"] = new_description
 
             elif description_update_choice.lower() == "n":
                 print("Description unchanged")
@@ -88,6 +88,16 @@ class Task:
         # Write back to file
         with open(self.file_name, "w") as tasks_file:
             json.dump(tasks, tasks_file, indent=4)
+
+    def delete_task(self, task_id): # Targeted delete rather than full clear
+        with open(self.file_name, "r") as tasks_file:
+            tasks = json.load(tasks_file)
+            tasks.pop(int(task_id) - 1) # Pop the task to be deleted
+
+        with open(self.file_name, "w") as tasks_file:
+            json.dump(tasks, tasks_file, indent=4) # Print remaining tasks back to file
+
+
 
     # Printing methods
 

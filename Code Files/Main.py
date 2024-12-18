@@ -14,3 +14,4 @@ if __name__ == "__main__":
     Task.print_complete(task_manager)
     Task.update_task(task_manager)
     Task.print_in_progress(task_manager)
+    Task.delete_task(task_manager, 2)
