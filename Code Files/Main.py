@@ -11,3 +11,4 @@ if __name__ == "__main__":
     Task.print_tasks(task_manager)
     Task.print_todo(task_manager)
     Task.print_in_progress(task_manager)
+    Task.print_complete(task_manager)

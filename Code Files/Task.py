@@ -76,3 +76,14 @@ class Task:
                 if task['status'] == 'in progress':
                     print(f"{task['id']}: {task['description']}")
 
+        print("\n")
+
+    def print_complete(self):
+        print("Tasks completed: \n")
+        with open(self.file_name, "r") as tasks_file:
+            tasks = json.load(tasks_file)
+            for task in tasks:
+                if task['status'] == 'done':
+                    print(f"{task['id']}: {task['description']}")
+
+        print("\n")
