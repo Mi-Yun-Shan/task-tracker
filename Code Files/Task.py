@@ -49,5 +49,9 @@ class Task:
             for task in tasks:
                 print(f"{task['id']}: {task['description']}")
 
+    def clear_tasks(self):
+        with open(self.file_name, "w") as tasks_file:
+            tasks = []
+            json.dump(tasks, tasks_file)
 
 
