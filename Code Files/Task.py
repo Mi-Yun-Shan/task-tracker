@@ -43,6 +43,11 @@ class Task:
             json.dump(tasks, tasks_file, indent=4)  # Write as a pretty-printed JSON array
 
 
+    def print_tasks(self):
+        with open(self.file_name, "r") as tasks_file:
+            tasks = json.load(tasks_file)
+            for task in tasks:
+                print(f"{task['id']}: {task['description']}")
 
 
 
