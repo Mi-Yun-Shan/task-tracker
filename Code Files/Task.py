@@ -12,6 +12,8 @@ class Task:
             with open(self.file_name, "w") as tasks_file:
                 json.dump([], tasks_file)  # Initialize with an empty list
 
+    # Add and delete methods
+
     def add_task(self, task_id, description, status="todo", created_at=None, updated_at=None):
         # Set default values for created_at and updated_at
         if created_at is None:
@@ -42,6 +44,12 @@ class Task:
         with open(self.file_name, "w") as tasks_file:
             json.dump(tasks, tasks_file, indent=4)  # Write as a pretty-printed JSON array
 
+    def clear_tasks(self):
+        with open(self.file_name, "w") as tasks_file:
+            tasks = []
+            json.dump(tasks, tasks_file)
+
+    # Printing methods
 
     def print_tasks(self):
         with open(self.file_name, "r") as tasks_file:
@@ -49,9 +57,13 @@ class Task:
             for task in tasks:
                 print(f"{task['id']}: {task['description']}")
 
-    def clear_tasks(self):
-        with open(self.file_name, "w") as tasks_file:
-            tasks = []
-            json.dump(tasks, tasks_file)
+    def print_todo(self):
+        print("Tasks yet to be started: \n")
+        with open(self.file_name, "r") as tasks_file:
+            tasks = json.load(tasks_file)
+            for task in tasks:
+                if task['status'] == 'todo':
+                    print(f"{task['id']}: {task['description']}")
+
 
 
